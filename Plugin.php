@@ -3,7 +3,7 @@
 /**
  * 强大好用的B站视频解析播放器
  * 
- * @package biliVido
+ * @package BiliVido
  * @author HaruhiYunona
  * @version 1.0.0
  * @link https://mdzz.pro
