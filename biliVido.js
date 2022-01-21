@@ -42,7 +42,7 @@ function analysisLink(anaPath, oquality, oauto, oround, ohotkey, ovolume, otheme
                 case ('480'):
                     var quality = 32;
                     break;
-                case ('320'):
+                case ('360'):
                     var quality = 16;
                     break;
                 default:
