@@ -75,7 +75,7 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
                 '1080' => _t('1080P'),
                 '720' => _t('720P'),
                 '480' => _t('480P'),
-                '320' => _t('320P'),
+                '360' => _t('360P'),
             ),
             '1080',
             _t('默认解析画质'),
