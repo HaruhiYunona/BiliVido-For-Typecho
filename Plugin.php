@@ -152,10 +152,10 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
         //jQuery支持
         $jqsup = trim(Typecho_Widget::widget('Widget_Options')->Plugin('BiliVido')->jqsupport);
         if ($jqsup == 'on') {
-            echo '<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>';
+            echo '<script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>';
         }
         //dplayer全家桶
-        echo '<meta name="referrer" content="no-referrer"/><script src="https://cdn.bootcdn.net/ajax/libs/hls.js/1.1.4-0.canary.8138/hls.min.js"></script><link href="https://cdn.bootcdn.net/ajax/libs/dplayer/1.9.1/DPlayer.min.css" rel="stylesheet"><script src="https://cdn.bootcdn.net/ajax/libs/dplayer/1.9.1/DPlayer.min.js"></script>';
+        echo '<meta name="referrer" content="no-referrer"/><script src="https://lib.baomitu.com/hls.js/8.0.0-beta.3/hls.min.js"></script><link href="https://lib.baomitu.com/dplayer/1.9.1/DPlayer.min.css" rel="stylesheet"><script src="https://lib.baomitu.com/dplayer/1.9.1/DPlayer.min.js"></script>';
     }
 
 
