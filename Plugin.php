@@ -65,7 +65,7 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
             ),
             'off',
             _t('jQuery支持(插件运行需要)'),
-            _t('请确认您已经在模板的header.php文件手动插入了jQurey，否则请您打开jQurey支持。插件自带的jQuery版本为3.6.0，CDN服务依托于猫云。')
+            _t('请确认您已经在模板的header.php文件手动插入了jQurey，否则请您打开jQurey支持。插件自带的jQuery版本为3.6.0，CDN服务依托于75CDN。')
         );
         $form->addInput($jqsupport);
         //画质
