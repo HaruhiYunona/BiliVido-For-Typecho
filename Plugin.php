@@ -48,7 +48,6 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
         //说明书
         echo "<h2>BiliVido插件说明书:</h2><br>";
         echo "1.本插件启用以后，可以自动将带有指定链接描述的B站视频(因为版权保护原因,不包含番剧)&lt;a&gt;标签转换为视频。每页仅可以有一个这样的标签，多了会出现未知bug。<br>";
-        echo "<font color=\"red\">*在带有被转换视频的页面会有两个报错，这个报错来自于BUG大王Dplayer自己的打包问题，并不是本插件问题。</font><br>";
         echo "2.该插件默认启动方式:将链接描述写入<font color=\"red\">#BV#</font>即可。例如:<br>";
         echo "<center><h4>[#BV#][1]<br><br>[1]: https://www.bilibili.com/video/BV1Na411r7tN</h4></center><br>";
         echo "上述写法引用的是默认配置。在#BV#后方可以写详细的单个播放器的配置,例如:<br>";
@@ -65,7 +64,7 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
             ),
             'off',
             _t('jQuery支持(插件运行需要)'),
-            _t('请确认您已经在模板的header.php文件手动插入了jQurey，否则请您打开jQurey支持。插件自带的jQuery版本为3.6.0，CDN服务依托于75CDN。')
+            _t('请确认您已经在模板的header.php文件手动插入了jQurey，否则请您打开jQurey支持。插件自带的jQuery版本为3.6.0。')
         );
         $form->addInput($jqsupport);
         //画质
@@ -152,10 +151,13 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
         //jQuery支持
         $jqsup = trim(Typecho_Widget::widget('Widget_Options')->Plugin('BiliVido')->jqsupport);
         if ($jqsup == 'on') {
-            echo '<script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script>';
+            echo '<script src='  . Helper::options()->pluginUrl . '/BiliVido/static/jquery.min.js"></script>';
         }
         //dplayer全家桶
-        echo '<meta name="referrer" content="no-referrer"/><script src="https://lib.baomitu.com/hls.js/8.0.0-beta.3/hls.min.js"></script><link href="https://lib.baomitu.com/dplayer/1.9.1/DPlayer.min.css" rel="stylesheet"><script src="https://lib.baomitu.com/dplayer/1.9.1/DPlayer.min.js"></script>';
+        echo '<meta name="referrer" content="no-referrer"/>';
+        echo '<script src="'  . Helper::options()->pluginUrl . '/BiliVido/static/hls.min.js"></script>';
+        echo '<script src="'  . Helper::options()->pluginUrl . '/BiliVido/static/Dplayer.min.js"></script>';
+        echo '<link rel="stylesheet" type="text/css" href="'  . Helper::options()->pluginUrl . '/BiliVido/static/Dplayer.min.css">';
     }
 
 

@@ -52,7 +52,7 @@ function analysisLink(anaPath, oquality, oauto, oround, ohotkey, ovolume, otheme
             var round = (round == 'on' || round == true) ? true : false;
             var hotkey = (hotkey == 'on' || hotkey == true) ? true : false;
             //解析b站链接配置
-            var link = link + '&';
+            var link = link.trim() + '&';
             if (link.indexOf('/video/') != -1) {
                 var bvcode = link.match(/(?<=\/video\/).+?(?=[\?&])/g);
                 var bvpage = link.match(/(?<=p\=).+?(?=[\?&])/g);
