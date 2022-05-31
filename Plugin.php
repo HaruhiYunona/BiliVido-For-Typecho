@@ -246,8 +246,8 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
         //dPlayer全家桶
         $dpSupport = trim(Typecho_Widget::widget('Widget_Options')->Plugin('BiliVido')->dpsupport);
         if ($dpSupport == 'on') {
-            echo '<script src="'  . $vidRoot . '/static/Dplayer.min.js"></script>';
-            echo '<link rel="stylesheet" type="text/css" href="'  . $vidRoot . '/static/Dplayer.min.css">';
+            echo '<script src="'  . $vidRoot . '/static/DPlayer.min.js"></script>';
+            echo '<link rel="stylesheet" type="text/css" href="'  . $vidRoot . '/static/DPlayer.min.css">';
         }
 
         //HLSj解码器
