@@ -88,7 +88,7 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
         echo "上述写法引用的是默认配置。在#BV#后方可以写详细的单个播放器的配置,例如:<br>";
         echo "<center><h4>[#BV# quality:1080;autoplay:false;][1]</h4></center><br>";
         echo "就像在写CSS一样非常方便。一定要注意这个也和代码一样要用英文分号 ; 结尾,不然会报错的<br>";
-        echo "详细属性清单请见我的:<br>Github:<a href=\"https://github.com/HaruhiYunona/BiliVido-For-Typecho\">https://github.com/HaruhiYunona/BiliVido-For-Typecho</a><br>Blog:<a href=\"https://mdzz.pro/2022/01/19/72.html\">https://mdzz.pro/2022/01/19/72.html</a><br><br>";
+        echo "详细属性清单请见我的:<br>Github:<a href=\"https://github.com/HaruhiYunona/BiliVido-For-Typecho\">https://github.com/HaruhiYunona/BiliVido-For-Typecho</a><br>Blog:<a href=\"https://mdzz.pro\">https://mdzz.pro</a><br><br>";
         echo "<br><h2>默认配置:</h2><br>";
 
 
