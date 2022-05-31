@@ -1,6 +1,6 @@
-# 欢迎使用BiliVido插件!
+# 欢迎使用BiliVido插件!(现已更新1.1.0版本)
 
-> BiliVido插件是为Typecho开发专门用于Bilibili视频解析的插件,可以解决bilibili自有分享视频的`<iframe>`组件,播放不清晰,无法调整和自适应大小的问题，可以完美融入文章之中。
+> BiliVido插件是为Typecho开发专门用于Bilibili视频解析的插件,可以解决bilibili自有分享视频的`<iframe>`组件,播放不清晰,无法调整和自适应大小的问题，可以完美融入文章之中。目前更新了批量转换以及弹幕解析功能（尚在测试）
 >
 > 该插件内部引用了 Bilibili解析API(https://github.com/injahow/bilibili-parse)和Dplayer等开源库。
 
