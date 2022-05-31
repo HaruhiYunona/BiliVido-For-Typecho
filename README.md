@@ -99,5 +99,5 @@
 | round    | true,false        | 自动循环 |
 | hotkey   | true,false        | 热键开关 |
 | volume   | 0~1 (小数,浮点数) | 默认音量 |
-| theme    | #000000~#FFFFFF   | 主题色   |
+| danmaku  | true，false       | 弹幕功能 |
 
