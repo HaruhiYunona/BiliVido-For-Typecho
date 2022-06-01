@@ -89,6 +89,7 @@ function biliAnaLink(anaPath, obili_quality, obili_round, obili_hotkey, obili_vo
 
                                 //添加播放器
                                 if (bili_danmaku == true) {
+                                    var token = md5(bvcode[0] + 'biliVido');
                                     new DPlayer({
                                         element: document.getElementById('dplayer_' + bvcode[0]),
                                         loop: bili_round,
@@ -102,8 +103,8 @@ function biliAnaLink(anaPath, obili_quality, obili_round, obili_hotkey, obili_vo
                                         },
                                         danmaku: {
                                             id: bvcode[0],
-                                            api: anaPath + '/src/send.php',
-                                            token: "212323213",
+                                            api: '/danmaku/get',
+                                            token: token,
                                             addition: [anaPath + '/src/danmaku.php?bv=' + bvcode[0] + '&page=' + bvpage]
                                         }
                                     });

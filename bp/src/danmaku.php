@@ -3,7 +3,7 @@
 /**
  * bilbili danmaku api
  * @link https://mdzz.pro
- * Version 1.1.0
+ * Version 1.1.3
  *
  * Copyright 2022, HaruhiYunona
  * Released under the MIT license
@@ -15,7 +15,9 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET');
 header('content-type:application/json;charset=utf-8');
-
+header ( " Expires: Mon, 26 Jul 1970 05:00:00 GMT " );
+header ( " Cache-Control: no-cache, must-revalidate " );
+header ( " Pragma: no-cache " );
 
 //根据BV号获取cid
 $bv = isset($_GET['bv']) ? $_GET['bv'] : '';
@@ -61,27 +63,30 @@ if ($myvideoInfo['code'] == 0) {
             $danmakuData = cut('p="', '">', $row);
             $danmakuText = cut('">', '</d>', $row);
             $danmakuDataArray = explode(",", $danmakuData);
-            if ($danmakuText != null) {
+            if ($danmakuDataArray[3] != null) {
                 $danmakuInfoArray = [(float)$danmakuDataArray[0], (int)$danmakuDataArray[5], $danmakuDataArray[3], $danmakuDataArray[6], $danmakuText];
                 $danmakuStream[] = $danmakuInfoArray;
             }
         }
 
-        if (is_array($danmakuStream)) {
+        if (is_array($danmakuStream)&&$danmakuStream!==null) {
             echo json_encode(array(
                 "code" => 0,
+                "msg"=>"外挂弹幕装填完成",
                 "data" => $danmakuStream
             ), JSON_UNESCAPED_UNICODE);
         } else {
+            $danmaku = [[0,0,"#fff","eeeeee"," "]];
             echo json_encode(array(
                 "code" => 0,
-                "data" => null
+                "msg" => "无外挂弹幕",
+                "data"=>$danmaku
             ), JSON_UNESCAPED_UNICODE);
         }
     } else {
         echo json_encode(array(
             "code" => 0,
-            "data" => null
+            "msg" => "无外挂弹幕"
         ), JSON_UNESCAPED_UNICODE);
     }
 }

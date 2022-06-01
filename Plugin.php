@@ -1,13 +1,14 @@
 <?php
 
 /**
- * 强大好用的B站视频解析播放器
+ * 强大好用的B站视频解析播放器,支持B站弹幕解析和网站弹幕
  * 
  * @package BiliVido
  * @author HaruhiYunona
- * @version 1.1.0
+ * @version 1.1.3
  * @link https://mdzz.pro
  */
+
 
 class BiliVido_Plugin implements Typecho_Plugin_Interface
 {
@@ -21,8 +22,31 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
      */
     public static function activate()
     {
+        //增加页头页脚控件,用于注入JS
         Typecho_Plugin::factory('Widget_Archive')->footer = array('BiliVido_Plugin', 'footer');
         Typecho_Plugin::factory('Widget_Archive')->header = array('BiliVido_Plugin', 'header');
+
+        //注册弹幕姬路由
+        Helper::addRoute("danmaku_get", "/danmaku/get", "BiliVido_Action", 'action');
+
+        //生成弹幕池数据表
+        $db = Typecho_Db::get();
+        $prefix = $db->getPrefix();
+        $result = $db->query('SHOW TABLES LIKE "' . $prefix . 'bilivido"')->fetch();
+        if ($result == false || $result == null) {
+            $db->query('CREATE TABLE `' . $prefix . 'bilivido` (
+                `uid` int(11) NOT NULL AUTO_INCREMENT,
+                `user` varchar(50) NOT NULL,
+                `bv` varchar(30) NOT NULL,
+                `text` text NOT NULL,
+                `color` varchar(20) NOT NULL,
+                `type` varchar(20) NOT NULL,
+                `time` varchar(20) NOT NULL,
+                `author` varchar(50) NOT NULL,
+                PRIMARY KEY (`uid`),
+                UNIQUE KEY `uid` (`uid`)
+               ) ENGINE=MyISAM DEFAULT CHARSET=utf8');
+        }
         return '启用成功!请前往管理面板设置,否则该插件将以默认配置运行';
     }
 
@@ -36,8 +60,11 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
      */
     public static function deactivate()
     {
+        //反注册路由
+        Helper::removeRoute('danmaku_get');
         return '禁用成功!插件已经停用。遇到问题了?去作者博客 https://mdzz.pro 看看吧!';
     }
+
 
 
     /**
@@ -49,6 +76,7 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
      */
     public static function config(Typecho_Widget_Helper_Form $form)
     {
+
 
         /**
          * 插件更新检测
@@ -76,7 +104,7 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
                 echo "<center><h4>您正在使用的是最新版本哦~</h4></center>";
             }
         }
-        mdzzUpdater("biliVido", 2);
+        mdzzUpdater("biliVido", 3);
 
         /**
          * 插件说明书
@@ -88,7 +116,7 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
         echo "上述写法引用的是默认配置。在#BV#后方可以写详细的单个播放器的配置,例如:<br>";
         echo "<center><h4>[#BV# quality:1080;autoplay:false;][1]</h4></center><br>";
         echo "就像在写CSS一样非常方便。一定要注意这个也和代码一样要用英文分号 ; 结尾,不然会报错的<br>";
-        echo "详细属性清单请见我的:<br>Github:<a href=\"https://github.com/HaruhiYunona/BiliVido-For-Typecho\">https://github.com/HaruhiYunona/BiliVido-For-Typecho</a><br>Blog:<a href=\"https://mdzz.pro\">https://mdzz.pro</a><br><br>";
+        echo "详细属性清单请见我的:<br>Github:<a href=\"https://github.com/HaruhiYunona/BiliVido-For-Typecho\">https://github.com/HaruhiYunona/BiliVido-For-Typecho</a><br>Blog:<a href=\"https://mdzz.pro/2022/01/19/72.html\">https://mdzz.pro/2022/01/19/72.html</a><br><br>";
         echo "<br><h2>默认配置:</h2><br>";
 
 
@@ -96,7 +124,13 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
          * 插件配置表盘
          */
 
-        //jQuery支持
+
+        //弹幕池设置
+        echo "<h4>弹幕池操作</h4>";
+        echo "<div style='display:inline-block'><span class='buttons'><a href='/danmaku/get?action=empty'>清空弹幕池</a></span><span class='buttons' style='margin-left:20px;'><a href='/danmaku/get?action=del'>删除弹幕池</a></span></div>";
+        echo "<p style='font-size:small;color:gray;'>清空弹幕池将清空本站所有弹幕;如果您要卸载本插件,请先进行此步操作:请酌情考虑保留弹幕池(下次装回插件后仍可正常显示以前弹幕)还是删除弹幕池(下次装回插件后作为全新插件使用)</p>";
+
+        //HTTPS支持
         $httpsSupport = new Typecho_Widget_Helper_Form_Element_Radio(
             'https',
             array(
@@ -121,6 +155,20 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
             _t('请确认您已经在模板的header.php文件手动插入了jQurey,否则请您打开jQurey支持。插件自带的jQuery版本为3.6.0。')
         );
         $form->addInput($jqSupport);
+
+        //md5支持
+        $httpsSupport = new Typecho_Widget_Helper_Form_Element_Radio(
+            'md5',
+            array(
+                'on' => _t('开启md5支持'),
+                'off' => _t('关闭md5支持'),
+            ),
+            'on',
+            _t('MD5支持'),
+            _t('请确认您已有默认安装的MD5.js,否则请打开本开关')
+        );
+        $form->addInput($httpsSupport);
+
 
         //Dplayer播放器
         $dpSupport = new Typecho_Widget_Helper_Form_Element_Radio(
@@ -246,14 +294,19 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
         //dPlayer全家桶
         $dpSupport = trim(Typecho_Widget::widget('Widget_Options')->Plugin('BiliVido')->dpsupport);
         if ($dpSupport == 'on') {
-            echo '<script src="'  . $vidRoot . '/static/DPlayer.min.js"></script>';
-            echo '<link rel="stylesheet" type="text/css" href="'  . $vidRoot . '/static/DPlayer.min.css">';
+            echo '<script src="'  . $vidRoot . '/static/Dplayer.min.js"></script>';
         }
 
         //HLSj解码器
         $hlsSupport = trim(Typecho_Widget::widget('Widget_Options')->Plugin('BiliVido')->hlssupport);
         if ($hlsSupport == 'on') {
             echo '<script src="'  . $vidRoot . '/static/hls.min.js"></script>';
+        }
+
+        //MD5支持
+        $md5Support = trim(Typecho_Widget::widget('Widget_Options')->Plugin('BiliVido')->md5);
+        if ($md5Support == 'on') {
+            echo '<script src="'  . $vidRoot . '/static/md5.min.js"></script>';
         }
 
         //加载插件JS
