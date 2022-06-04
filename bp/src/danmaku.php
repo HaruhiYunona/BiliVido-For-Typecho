@@ -15,9 +15,9 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET');
 header('content-type:application/json;charset=utf-8');
-header ( " Expires: Mon, 26 Jul 1970 05:00:00 GMT " );
-header ( " Cache-Control: no-cache, must-revalidate " );
-header ( " Pragma: no-cache " );
+header ('Expires: Mon, 26 Jul 1970 05:00:00 GMT');
+header ('Cache-Control: no-cache, must-revalidate');
+header ('Pragma: no-cache');
 
 //根据BV号获取cid
 $bv = isset($_GET['bv']) ? $_GET['bv'] : '';
