@@ -87,9 +87,9 @@ class BiliVido_Action extends Typecho_Widget implements Widget_Interface_Do
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET');
         header('content-type:application/json;charset=utf-8');
-        header(" Expires: Mon, 26 Jul 1970 05:00:00 GMT ");
-        header(" Cache-Control: no-cache, must-revalidate ");
-        header(" Pragma: no-cache ");
+        header ('Expires: Mon, 26 Jul 1970 05:00:00 GMT');
+        header ('Cache-Control: no-cache, must-revalidate');
+        header ('Pragma: no-cache');
         $this->init();
         $db = Typecho_Db::get();
         $query = $db->select()->from('table.bilivido')->where('bv = ?', $bv);
