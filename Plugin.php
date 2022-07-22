@@ -5,7 +5,7 @@
  * 
  * @package BiliVido
  * @author HaruhiYunona
- * @version 1.1.3
+ * @version 1.1.4
  * @link https://mdzz.pro
  */
 
@@ -104,7 +104,7 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
                 echo "<center><h4>您正在使用的是最新版本哦~</h4></center>";
             }
         }
-        mdzzUpdater("biliVido", 3);
+        mdzzUpdater("biliVido", 4);
 
         /**
          * 插件说明书
