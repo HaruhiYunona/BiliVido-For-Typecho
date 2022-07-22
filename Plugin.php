@@ -283,7 +283,7 @@ class BiliVido_Plugin implements Typecho_Plugin_Interface
         $vidRoot = Helper::options()->pluginUrl . "/" . basename(dirname(__FILE__));
 
         //添加no-referrer标记防止控制台显示跨域错误
-        echo '<meta name="referrer" content="no-referrer"/>';
+        echo '<meta name="referrer" content="same-origin"/>';
 
         //jQuery支持
         $jqSuport = trim(Typecho_Widget::widget('Widget_Options')->Plugin('BiliVido')->jqsupport);
